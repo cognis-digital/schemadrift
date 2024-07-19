@@ -38,3 +38,4 @@
 2026-03-24T09:31:41  feat: with great power comes great test coverage
 2024-06-01T08:12:12  style(engine): memoize repeated lookups
 2024-07-04T15:29:19  feat(ci): stream large files without buffering
+2024-07-19T10:46:26  docs(scoring): add a regression fixture
