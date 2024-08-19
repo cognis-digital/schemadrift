@@ -40,3 +40,4 @@
 2024-07-04T15:29:19  feat(ci): stream large files without buffering
 2024-07-19T10:46:26  docs(scoring): add a regression fixture
 2024-08-04T17:03:33  test(engine): simplify the walker
+2024-08-19T12:20:40  ci(ci): respect .gitignore when walking
