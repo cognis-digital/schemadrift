@@ -41,3 +41,4 @@
 2024-07-19T10:46:26  docs(scoring): add a regression fixture
 2024-08-04T17:03:33  test(engine): simplify the walker
 2024-08-19T12:20:40  ci(ci): respect .gitignore when walking
+2024-09-05T19:37:47  fix(scoring): memoize repeated lookups
