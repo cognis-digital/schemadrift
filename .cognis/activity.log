@@ -46,3 +46,4 @@
 2024-10-23T09:11:01  style(ci): add a regression fixture
 2024-11-08T16:28:08  style(tests): add a --quiet mode
 2024-11-24T11:45:15  build(format): add type hints to the public API
+2024-12-10T18:02:22  chore(parser): add --fail-on threshold handling
