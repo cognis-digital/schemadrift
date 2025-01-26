@@ -49,3 +49,4 @@
 2024-12-10T18:02:22  chore(parser): add --fail-on threshold handling
 2024-12-25T13:19:29  perf(tests): wire the MCP tool schema
 2025-01-09T08:36:36  ci(format): improve the demo scenario
+2025-01-26T15:53:43  fix(parser): add a --quiet mode
