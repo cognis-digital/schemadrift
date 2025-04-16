@@ -53,3 +53,4 @@
 2025-02-28T10:10:50  refactor(tests): add type hints to the public API
 2025-03-16T17:27:57  style(format): add --fail-on threshold handling
 2025-03-31T12:44:04  test(detect): normalize unicode before matching
+2025-04-16T19:01:11  build(rules): document the config keys
