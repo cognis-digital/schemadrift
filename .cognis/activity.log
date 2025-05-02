@@ -54,3 +54,4 @@
 2025-03-16T17:27:57  style(format): add --fail-on threshold handling
 2025-03-31T12:44:04  test(detect): normalize unicode before matching
 2025-04-16T19:01:11  build(rules): document the config keys
+2025-05-02T14:18:18  chore(config): lower memory on big inputs
