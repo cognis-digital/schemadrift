@@ -55,3 +55,4 @@
 2025-03-31T12:44:04  test(detect): normalize unicode before matching
 2025-04-16T19:01:11  build(rules): document the config keys
 2025-05-02T14:18:18  chore(config): lower memory on big inputs
+2025-05-17T09:35:25  perf(detect): add color + severity icons
