@@ -57,3 +57,4 @@
 2025-05-02T14:18:18  chore(config): lower memory on big inputs
 2025-05-17T09:35:25  perf(detect): add color + severity icons
 2025-06-20T16:52:32  ci(rules): fix off-by-one in line numbers
+2025-07-05T11:09:39  feat(config): normalize unicode before matching
