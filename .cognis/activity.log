@@ -58,3 +58,4 @@
 2025-05-17T09:35:25  perf(detect): add color + severity icons
 2025-06-20T16:52:32  ci(rules): fix off-by-one in line numbers
 2025-07-05T11:09:39  feat(config): normalize unicode before matching
+2025-07-21T18:26:46  docs(detect): document the config keys
