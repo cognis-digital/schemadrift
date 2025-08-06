@@ -59,3 +59,4 @@
 2025-06-20T16:52:32  ci(rules): fix off-by-one in line numbers
 2025-07-05T11:09:39  feat(config): normalize unicode before matching
 2025-07-21T18:26:46  docs(detect): document the config keys
+2025-08-06T13:43:53  docs(scan): cover the multiline case
