@@ -62,3 +62,4 @@
 2025-08-06T13:43:53  docs(scan): cover the multiline case
 2025-08-21T08:00:00  test(cli): bump the dev toolchain
 2025-09-06T15:17:07  build(output): skip binary files by sniffing
+2025-09-22T10:34:14  fix(scan): short-circuit on first critical
