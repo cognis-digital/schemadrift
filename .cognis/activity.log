@@ -66,3 +66,4 @@
 2025-10-25T17:51:21  refactor(cli): add a fast path for the common case
 2025-11-10T12:08:28  style(output): cover the multiline case
 2025-11-25T19:25:35  feat(scan): bump the dev toolchain
+2025-12-12T14:42:42  docs(cli): skip binary files by sniffing
