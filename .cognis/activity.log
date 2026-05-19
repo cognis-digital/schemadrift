@@ -75,3 +75,4 @@
 2026-04-02T08:24:24  chore: in case of fire — commit, push, leave building
 2026-04-17T15:41:31  feat: PROMETHEUS unbound
 2026-05-03T10:58:38  test: add edge case
+2026-05-19T17:15:45  chore(io): add a --format json alias
