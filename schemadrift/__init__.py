@@ -1,34 +1,11 @@
-"""SCHEMADRIFT - Schema-change detector and data-contract tests.
-
-Infer a schema from tabular/JSON data, diff two schemas to detect drift
-(added/removed/renamed-ish fields, type changes, nullability and cardinality
-shifts), and enforce a declarative data contract against a dataset.
-
-Standard library only. Zero install.
-"""
-from .core import (
-    infer_schema,
-    diff_schemas,
-    check_contract,
-    load_records,
-    FieldStats,
-    Schema,
-    DriftReport,
-    ContractResult,
-)
-
-TOOL_NAME = "schemadrift"
-TOOL_VERSION = "1.0.0"
-
-__all__ = [
-    "TOOL_NAME",
-    "TOOL_VERSION",
-    "infer_schema",
-    "diff_schemas",
-    "check_contract",
-    "load_records",
-    "FieldStats",
-    "Schema",
-    "DriftReport",
-    "ContractResult",
-]
+"""schemadrift — part of the Cognis Neural Suite."""
+try:  # re-export the tool's public API + identity from core
+    from schemadrift.core import *  # noqa: F401,F403
+except Exception:  # pragma: no cover
+    pass
+try:
+    from schemadrift.core import TOOL_NAME, TOOL_VERSION
+except Exception:  # pragma: no cover
+    TOOL_NAME = "schemadrift"
+    TOOL_VERSION = "0.1.0"
+__version__ = TOOL_VERSION
