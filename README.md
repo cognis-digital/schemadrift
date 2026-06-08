@@ -36,9 +36,10 @@ data contracts trend
 <a name="features"></a>
 ## Features
 
-- ✅ Todo
-- ✅ Fixme
-- ✅ Xxx
+- ✅ Infer Schema
+- ✅ Diff Schemas
+- ✅ Check Contract
+- ✅ Load Records
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
