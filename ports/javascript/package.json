@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/schemadrift",
+  "version": "0.2.0",
+  "description": "JavaScript port of schemadrift (Cognis Neural Suite)",
+  "bin": {
+    "schemadrift": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
