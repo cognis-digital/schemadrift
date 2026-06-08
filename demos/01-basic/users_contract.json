@@ -1,0 +1,11 @@
+{
+  "allow_extra_fields": true,
+  "fields": {
+    "user_id": {"type": "int", "required": true, "nullable": false, "unique": true},
+    "email": {"type": "string", "required": true, "nullable": false, "regex": "@"},
+    "signup_ts": {"type": "int", "required": true, "nullable": false},
+    "age": {"type": "int", "required": false, "nullable": true, "min": 0, "max": 130},
+    "country": {"type": "string", "required": true, "nullable": false},
+    "status": {"type": "string", "required": true, "enum": ["active", "closed"]}
+  }
+}

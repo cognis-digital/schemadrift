@@ -1,0 +1,6 @@
+[
+  {"user_id": 1, "email": "ada@example.com", "signup_ts": 1717804800, "age": 36, "country": "GB", "status": "active"},
+  {"user_id": 2, "email": "alan@example.com", "signup_ts": 1717891200, "age": 41, "country": "GB", "status": "active"},
+  {"user_id": 3, "email": "grace@example.com", "signup_ts": 1717977600, "age": 29, "country": "US", "status": "closed"},
+  {"user_id": 4, "email": "linus@example.com", "signup_ts": 1718064000, "age": 33, "country": "FI", "status": "active"}
+]
