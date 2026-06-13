@@ -20,6 +20,33 @@ pip install cognis-schemadrift
 schemadrift scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+`schemadrift` infers schemas, detects schema drift between two datasets, and enforces declarative data contracts. Console script: `schemadrift`.
+
+1. **Install**:
+   ```bash
+   pipx install schemadrift     # or: pip install schemadrift
+   ```
+2. **Infer a schema** from a `.json` / `.ndjson` / `.csv` dataset:
+   ```bash
+   schemadrift infer current.ndjson
+   ```
+3. **Detect drift** between a baseline and the current dataset (the `--format` flag is global, before the subcommand):
+   ```bash
+   schemadrift --format json drift baseline.ndjson current.ndjson | jq '.breaking'
+   ```
+   Exit codes: `0` no drift, `2` drift detected, `3` BREAKING drift.
+4. **Enforce a data contract** against a dataset:
+   ```bash
+   schemadrift contract current.ndjson --contract contract.json
+   ```
+   Exit `2` on contract violations.
+5. **Gate a data pipeline in CI** — block breaking schema changes before they ship:
+   ```bash
+   schemadrift drift baseline.ndjson current.ndjson; rc=$?; test $rc -ne 3 || echo "BREAKING schema change — blocking deploy"
+   ```
+
 ## Contents
 
 - [Why schemadrift?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
