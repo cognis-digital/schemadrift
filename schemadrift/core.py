@@ -14,18 +14,15 @@ import io
 import json
 import math
 from dataclasses import dataclass, field, asdict
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 # Ordering used to pick a single dominant type and to judge type widening.
-# A change from a more-specific to a broader type (e.g. int->float, int->string)
-# is treated as non-breaking widening in one direction only.
+# Only value-preserving numeric widening (int->float) is non-breaking, matching
+# Avro/BigQuery-style schema compatibility. A numeric/bool field turning into a
+# string is a contract break for typed consumers, not a widening.
 _TYPE_RANK = {"null": 0, "bool": 1, "int": 2, "float": 3, "string": 4, "object": 5, "array": 6}
 _WIDENS = {
     ("int", "float"),
-    ("int", "string"),
-    ("float", "string"),
-    ("bool", "int"),
-    ("bool", "string"),
 }
 
 

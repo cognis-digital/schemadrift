@@ -1,5 +1,4 @@
 """Smoke tests for SCHEMADRIFT. Standard library only, no network."""
-import json
 import os
 import sys
 import unittest
