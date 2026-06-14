@@ -34,3 +34,6 @@ schemadrift = "schemadrift.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["schemadrift"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
