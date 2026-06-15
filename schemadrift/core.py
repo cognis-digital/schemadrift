@@ -21,11 +21,11 @@ from typing import Any, Dict, List, Optional, Tuple
 # is treated as non-breaking widening in one direction only.
 _TYPE_RANK = {"null": 0, "bool": 1, "int": 2, "float": 3, "string": 4, "object": 5, "array": 6}
 _WIDENS = {
+    # Safe widenings are numeric promotions only. Stringifying a numeric/bool field
+    # (int/float/bool -> string) breaks consumers that parse it as a number, so those
+    # are treated as BREAKING, not widening.
     ("int", "float"),
-    ("int", "string"),
-    ("float", "string"),
     ("bool", "int"),
-    ("bool", "string"),
 }
 
 
