@@ -152,6 +152,15 @@ def main(argv: Optional[List[str]] = None) -> int:
     except FileNotFoundError as e:
         print(f"error: file not found: {e.filename}", file=sys.stderr)
         return 1
+    except IsADirectoryError as e:
+        print(f"error: path is a directory, not a file: {e.filename}", file=sys.stderr)
+        return 1
+    except PermissionError as e:
+        print(f"error: permission denied: {e.filename}", file=sys.stderr)
+        return 1
+    except OSError as e:
+        print(f"error: I/O error: {e}", file=sys.stderr)
+        return 1
     except (ValueError, json.JSONDecodeError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 1

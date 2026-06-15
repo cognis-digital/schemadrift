@@ -253,13 +253,42 @@ def check_contract(records: List[Dict[str, Any]], contract: Dict[str, Any]) -> C
         },
         "allow_extra_fields": false
       }
+    Raises ValueError for an invalid contract (e.g. bad regex pattern).
     """
     import re
 
+    if not isinstance(contract, dict):
+        raise ValueError("contract must be a JSON object")
+
     spec_fields: Dict[str, Any] = contract.get("fields", {})
+    if not isinstance(spec_fields, dict):
+        raise ValueError("contract 'fields' must be an object")
     allow_extra = contract.get("allow_extra_fields", True)
     violations: List[Dict[str, Any]] = []
     seen_unique: Dict[str, set] = {n: set() for n, s in spec_fields.items() if s.get("unique")}
+
+    # Pre-compile and validate regex patterns so we fail fast with a clear error.
+    compiled_regex: Dict[str, Any] = {}
+    for fname, spec in spec_fields.items():
+        if not isinstance(spec, dict):
+            raise ValueError(f"contract field spec for '{fname}' must be an object")
+        pat = spec.get("regex")
+        if pat is not None:
+            try:
+                compiled_regex[fname] = re.compile(pat)
+            except re.error as exc:
+                raise ValueError(
+                    f"invalid regex for field '{fname}': {exc}"
+                ) from exc
+
+    # Validate min/max are numeric if present.
+    for fname, spec in spec_fields.items():
+        for bound in ("min", "max"):
+            bval = spec.get(bound)
+            if bval is not None and not isinstance(bval, (int, float)):
+                raise ValueError(
+                    f"contract field '{fname}': '{bound}' must be a number, got {type(bval).__name__!r}"
+                )
 
     declared = set(spec_fields.keys())
 
@@ -304,7 +333,7 @@ def check_contract(records: List[Dict[str, Any]], contract: Dict[str, Any]) -> C
             if "enum" in spec and val not in spec["enum"]:
                 violations.append({"row": i, "field": fname, "rule": "enum", "expected": spec["enum"], "actual": val})
 
-            if "regex" in spec and isinstance(val, str) and not re.search(spec["regex"], val):
+            if fname in compiled_regex and isinstance(val, str) and not compiled_regex[fname].search(val):
                 violations.append({"row": i, "field": fname, "rule": "regex", "pattern": spec["regex"], "actual": val})
 
             _track_unique(seen_unique, fname, val, i, violations)
@@ -340,15 +369,25 @@ def _as_number(val: Any) -> Optional[float]:
     return None
 
 
+_SUPPORTED_EXTENSIONS = (".json", ".ndjson", ".csv")
+
+
 def load_records(path: str, text: Optional[str] = None) -> List[Dict[str, Any]]:
     """Load records from a .json (array or NDJSON) or .csv source.
 
     If `text` is given, `path` is only used to pick the format by extension.
+    Raises ValueError for unsupported extensions or malformed content.
+    Raises FileNotFoundError / PermissionError / OSError for I/O issues.
     """
+    lower = path.lower()
+    if not any(lower.endswith(ext) for ext in _SUPPORTED_EXTENSIONS):
+        raise ValueError(
+            f"unsupported file type '{path}'; expected one of: "
+            + ", ".join(_SUPPORTED_EXTENSIONS)
+        )
     if text is None:
         with open(path, "r", encoding="utf-8") as fh:
             text = fh.read()
-    lower = path.lower()
     if lower.endswith(".csv"):
         reader = csv.DictReader(io.StringIO(text))
         return [dict(row) for row in reader]
@@ -359,10 +398,15 @@ def load_records(path: str, text: Optional[str] = None) -> List[Dict[str, Any]]:
         if not isinstance(data, list):
             raise ValueError("top-level JSON must be an array of objects")
         return data
-    # NDJSON fallback
+    # NDJSON fallback — report the line number on parse errors
     records = []
-    for line in text.splitlines():
+    for lineno, line in enumerate(text.splitlines(), start=1):
         line = line.strip()
         if line:
-            records.append(json.loads(line))
+            try:
+                records.append(json.loads(line))
+            except json.JSONDecodeError as exc:
+                raise ValueError(
+                    f"invalid JSON on line {lineno}: {exc.msg}"
+                ) from exc
     return records

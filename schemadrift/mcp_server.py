@@ -1,6 +1,9 @@
-"""SCHEMADRIFT MCP server — exposes scan() as an MCP tool for Cognis.Studio."""
+"""SCHEMADRIFT MCP server — exposes infer/drift/contract as MCP tools for Cognis.Studio."""
 from __future__ import annotations
-from schemadrift.core import scan, to_json
+
+import json
+import sys
+
 
 def serve() -> int:
     """Start an MCP stdio server. Requires the optional 'mcp' extra:
@@ -9,14 +12,34 @@ def serve() -> int:
     try:
         from mcp.server.fastmcp import FastMCP
     except Exception:
-        print("Install the MCP extra: pip install 'cognis-schemadrift[mcp]'")
+        print(
+            "error: MCP extra not installed. Run: pip install 'cognis-schemadrift[mcp]'",
+            file=sys.stderr,
+        )
         return 1
+
+    from schemadrift.core import infer_schema, diff_schemas, load_records
+
     app = FastMCP("schemadrift")
 
     @app.tool()
-    def schemadrift_scan(target: str) -> str:
-        """Schema-change detector and data-contract tests. Returns JSON findings."""
-        return to_json(scan(target))
+    def schemadrift_infer(path: str) -> str:
+        """Infer a schema from a dataset file (.json/.ndjson/.csv). Returns JSON."""
+        try:
+            records = load_records(path)
+            return json.dumps(infer_schema(records).to_dict(), indent=2, default=str)
+        except (FileNotFoundError, PermissionError, OSError, ValueError) as exc:
+            return json.dumps({"error": str(exc)})
+
+    @app.tool()
+    def schemadrift_drift(baseline: str, current: str) -> str:
+        """Detect schema drift between two dataset files. Returns JSON drift report."""
+        try:
+            old = infer_schema(load_records(baseline))
+            new = infer_schema(load_records(current))
+            return json.dumps(diff_schemas(old, new).to_dict(), indent=2, default=str)
+        except (FileNotFoundError, PermissionError, OSError, ValueError) as exc:
+            return json.dumps({"error": str(exc)})
 
     app.run()
     return 0
