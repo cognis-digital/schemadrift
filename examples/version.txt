@@ -1,0 +1,3 @@
+$ schemadrift-emit --version
+
+schemadrift 0.1.0

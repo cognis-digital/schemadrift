@@ -20,6 +20,70 @@ pip install cognis-schemadrift
 schemadrift scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ schemadrift-emit --version
+schemadrift 0.1.0
+```
+
+```console
+$ schemadrift-emit --help
+usage: schemadrift [-h] [--version] [--format {table,json}]
+                   {infer,drift,contract} ...
+
+Schema-change detector and data-contract tests.
+
+positional arguments:
+  {infer,drift,contract}
+    infer               infer a schema from a dataset
+    drift               detect drift between baseline and current datasets
+    contract            enforce a data contract against a dataset
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+                        output format
+```
+
+> Blocks above are real `schemadrift` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+"schema": "schemadrift",
+"findings": [
+    {
+        "id": "1234567890",
+        "title": "Example Finding 1",
+        "description": "This is an example finding.",
+        "data": {
+            "ip": "192.168.1.100",
+            "port": 80
+        },
+        "mitre_attack_id": "T1234"
+    },
+    {
+        "id": "2345678901",
+        "title": "Example Finding 2",
+        "description": "This is another example finding.",
+        "data": {
+            "username": "johndoe",
+            "password": "hunter2"
+        }
+    }
+]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 `schemadrift` infers schemas, detects schema drift between two datasets, and enforces declarative data contracts. Console script: `schemadrift`.

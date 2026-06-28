@@ -1,0 +1,18 @@
+$ schemadrift-emit --help
+
+usage: schemadrift [-h] [--version] [--format {table,json}]
+                   {infer,drift,contract} ...
+
+Schema-change detector and data-contract tests.
+
+positional arguments:
+  {infer,drift,contract}
+    infer               infer a schema from a dataset
+    drift               detect drift between baseline and current datasets
+    contract            enforce a data contract against a dataset
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+                        output format
